@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang = "zh">
+<head>
+	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "viewport" content = "width = device-width, height = device-height">
+
+<link rel='apple-touch-icon' href='img/icon-h.png' type='image/png' />
+<link rel='shortcut icon' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+<link rel='icon' href='img/icon-h.png' type='image/png' />
+<link rel='bookmark' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+
+<title>QuickQuiz-M</title>
+<link rel = "stylesheet" type = "text/css" href="css/style.css" />
+
+<script type = "text/javascript" src = "js/global.js"></script>
+<script type = "text/javascript" src = "js/nightmode.js"></script>
+<script type = "text/javascript" src = "js/md5.js"></script>
+<script type = "text/javascript" src = "js/test.js"></script>
+
+</head>
+
+<body onload = "initQstnCount()">
+	
+<div style = "margin-top: 12px;">
+	<div class = "qq_button" id = "night" style = "width: 95px; line-height: 35px;" onclick = "testNightMode(true)">夜间模式</div>
+	<small>【返回主界面请回退】</small>
+</div>
+
+<div id = "count">
+	<div style = "margin-top: 8px;">
+		单选题数：<input type = "number" id = "schCount" maxlength = "3" value = "20" style = "width : 30%" onchange = "checkInput()" onclick = "this.select();"></input>
+		<span id = "schMax"></span>
+	</div>
+	<div style = "margin-top: 8px;">
+		多选题数：<input type = "number" id = "mchCount" maxlength = "3" value = "20" style = "width : 30%" onchange = "checkInput()" onclick = "this.select();"></input>
+		<span id = "mchMax"></span>
+	</div>
+	<input type = "checkbox" id = "rand" style = "margin-top: 14px;"></input><label for = "rand" id = "randl" style = "margin-top: 14px;">选项打乱</label>
+	<div style = "margin-top: 8px;">
+		判断题数：<input type = "number" id = "jdgCount" maxlength = "3" value = "10" style = "width : 30%" onchange = "checkInput()" onclick = "this.select();"></input>
+		<span id = "jdgMax"></span>
+	</div>
+	<div style = "margin-top: 8px;">
+		测试时间：<input type = "number" id = "timeLimit" maxlength = "3" value = "30" style = "width : 30%" onchange = "checkInput()" onclick = "this.select();"></input>
+		分钟<br /><small>（最大180分钟，输入0或不输入不限时）</small>
+	</div>
+	
+	<div style = "margin-top: 8px;">
+		请输入姓名：<input type = "text" id = "name" maxlength = "8" style = "width : 50%" onclick = "this.select();"></input><br/>
+		<small>（作为题目排序依据，可不输入）</small>
+	</div>
+		
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" id = "go" onclick = "makeQuiz()">开始答题</div>
+	</div>
+</div>
+
+<div id = "test" style = "display : none">
+	<h3 style = "font-size: 95%;">
+		<div id = "title"></div>
+		<div id = "timeLeft"></div>
+		<div id = "qstnCount"></div>
+		<div id = "qstnType"></div>
+	</h3>
+
+	<p id = "desc"></p>
+	<div id = "img"></div>
+	
+	<div id = "single">
+		<input type = "radio" name = "single" id = "single-a"></input><label for = "single-a" id = "stxt-a" onclick = "clickLable(event, 'single-a', 'a')"></label>
+		<input type = "radio" name = "single" id = "single-b"></input><label for = "single-b" id = "stxt-b" onclick = "clickLable(event, 'single-b', 'b')"></label>
+		<input type = "radio" name = "single" id = "single-c"></input><label for = "single-c" id = "stxt-c" onclick = "clickLable(event, 'single-c', 'c')"></label>
+		<input type = "radio" name = "single" id = "single-d"></input><label for = "single-d" id = "stxt-d" onclick = "clickLable(event, 'single-d', 'd')"></label>
+		<input type = "radio" name = "single" id = "single-e"></input><label for = "single-e" id = "stxt-e" onclick = "clickLable(event, 'single-e', 'e')"></label>
+		<input type = "radio" name = "single" id = "single-f"></input><label for = "single-f" id = "stxt-f" onclick = "clickLable(event, 'single-f', 'f')"></label>
+		<input type = "radio" name = "single" id = "single-g"></input><label for = "single-g" id = "stxt-g" onclick = "clickLable(event, 'single-g', 'g')"></label>
+		<input type = "radio" name = "single" id = "single-h"></input><label for = "single-h" id = "stxt-h" onclick = "clickLable(event, 'single-h', 'h')"></label>
+	</div> 
+	<div id = "multi">
+		<input type = "checkbox" id = "multi-a"></input><label for = "multi-a" id = "mtxt-a" onclick = "clickLable(event, 'multi-a', 'a')"></label>
+		<input type = "checkbox" id = "multi-b"></input><label for = "multi-b" id = "mtxt-b" onclick = "clickLable(event, 'multi-b', 'b')"></label>
+		<input type = "checkbox" id = "multi-c"></input><label for = "multi-c" id = "mtxt-c" onclick = "clickLable(event, 'multi-c', 'c')"></label>
+		<input type = "checkbox" id = "multi-d"></input><label for = "multi-d" id = "mtxt-d" onclick = "clickLable(event, 'multi-d', 'd')"></label>
+		<input type = "checkbox" id = "multi-e"></input><label for = "multi-e" id = "mtxt-e" onclick = "clickLable(event, 'multi-e', 'e')"></label>
+		<input type = "checkbox" id = "multi-f"></input><label for = "multi-f" id = "mtxt-f" onclick = "clickLable(event, 'multi-f', 'f')"></label>
+		<input type = "checkbox" id = "multi-g"></input><label for = "multi-g" id = "mtxt-g" onclick = "clickLable(event, 'multi-g', 'g')"></label>
+		<input type = "checkbox" id = "multi-h"></input><label for = "multi-h" id = "mtxt-h" onclick = "clickLable(event, 'multi-h', 'h')"></label>
+	</div> 
+	
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" onclick = "showPreQstn()">上一题</div>
+		<div class = "qq_button" onclick = "showNextQstn()">下一题</div>
+	</div>
+	
+	<div id = "doingfunc">
+		<div style = "margin-top: 8px;">
+			<div class = "qq_button" id = "nextundone" onclick = "showNextUnDone()">跳至未答</div>
+		</div>
+	</div>
+	<div style = "margin-top: 8px;">
+		<input type = "checkbox" id = "mark"></input><label for = "mark">标记本题</label>
+		<div class = "qq_button" onclick = "showNextMark()">下个标记</div>
+	</div>
+	<div style = "margin-top: 8px;">
+		<input type = "checkbox" id = "onlyfalse"></input><label for = "onlyfalse" id = "onlytxt">只看错题</label>
+	</div>
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" id = "pause" onclick = "pause()">暂停答题</div>
+		<div class = "qq_button" id = "switch" onclick = "switchFunc(true)">结束答题</div>
+	</div>
+	
+	<hr id = "resolve-hr" style = "margin-bottom : 0" />
+	<div id = "resolve-div" style = "background : #1E90FF; color : white" onclick = "showHideShowFunc('resolve-p', 'showresolve', '查看题目解析')">
+		<small id = "showresolve">&#9658查看题目解析</small>
+	</div>
+	<p id = "resolve-p" style = "display : none; font-size: 90%;"></p>
+	
+	<hr style = "margin-bottom : 0" />
+	<div style = "background : #1E90FF; color : white" onclick = "showHideShowFunc('qstnGo', 'findtext', '题目跳转')">
+		<small id = "findtext">&#9658题目跳转</small>
+	</div>
+	<div id = "qstnGo" style = "display : none;">
+		<div style = "margin-top: 8px;">
+			跳转至：<input type = "text" id = "goTo" maxlength = "5" style = "width : 30%" onfocus = "this.select()"></input>
+			<div class = "qq_button" onclick = "goToQstn()">前往</div>
+		</div>
+		<div style = "margin-top: 8px;">
+			关键字查找（10字符以内）：<input type = "text" id = "search" maxlength = "10" style = "width : 75%" onfocus = "this.select()"></input>
+		</div>
+		<div style = "margin-top: 8px;">
+			<div class = "qq_button" onclick = "searchQstn()">查找</div>
+		</div>
+	</div>
+</div>
+
+<div id = "pausescreen" style = "display : none;">
+	<h3>暂停中。。。</h3>
+	<div class = "qq_button" id = "goon" onclick = "goOnTest()">点击继续</div>
+</div>
+
+<hr />
+<small>GX Software 2018-2021 by 南郊居士</small>
+
+</body>
+</html>

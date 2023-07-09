@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang = "zh">
+<head>
+	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "viewport" content = "width = device-width, height = device-height">
+
+<link rel='apple-touch-icon' href='img/icon-h.png' type='image/png' />
+<link rel='shortcut icon' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+<link rel='icon' href='img/icon-h.png' type='image/png' />
+<link rel='bookmark' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+
+<title>QuickQuiz-M</title>
+
+<link rel = "stylesheet" type = "text/css" href="css/style.css" />
+
+<script type = "text/javascript" src = "js/global.js"></script>
+<script type = "text/javascript" src = "js/nightmode.js"></script>
+<script type = "text/javascript" src = "js/md5.js"></script>
+<script type = "text/javascript" src = "js/show.js"></script>
+
+</head>
+
+<body onload = "initShowList()">
+
+<div style = "margin-top: 12px;">
+	<div class = "qq_button" id = "night" style = "width: 95px; line-height: 35px;" onclick = "nightMode(true)">夜间模式</div>
+	<small>【返回主界面请回退】</small>
+</div>
+
+<h3 style = "font-size: 95%;">
+	<div id = "title"></div>
+	<div id = "qstnCount"></div>
+	<div id = "qstnType"></div>
+</h3>
+
+<div id = "grpdesc" style = "font-size: 80%; width: 100%; height: 16em; overflow-y: auto; display: none; border: 1px solid #1E90FF;"></div>
+<p id = "desc"></p>
+<div id = "img"></div>
+
+<ol id = "choise" type = "A">
+	<li id = "option-a"></li>
+	<li id = "option-b"></li>
+	<li id = "option-c"></li>
+	<li id = "option-d"></li>
+	<li id = "option-e"></li>
+	<li id = "option-f"></li>
+	<li id = "option-g"></li>
+	<li id = "option-h"></li>
+</ol>
+<ol id = "blanks" type = "1">
+</ol>
+<p id = "text">
+</p>
+
+<div>
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" onclick = "showPreQstn()">上一题</div>
+		<div class = "qq_button" onclick = "showNextQstn()">下一题</div>
+	</div>
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" id = "ansBtn" onclick = "showAnswer(false)">显示答案</div>
+		<div class = "qq_button" id = "rmAnsBtn" onclick = "showAnswer(true)">隐藏答案</div>
+	</div>
+	<div style = "margin-top: 8px;">
+		<input type = "checkbox" id = "wholeShow" /><label for = "wholeShow" id = "wholeShowText">一次性显示</label>
+	</div>
+	<div id = "bookMark">
+		<div style = "margin-top: 8px;">
+			<input type = "checkbox" id = "bookMarkC" /><label for = "bookMarkC">收藏本题</label>
+			<span id = "bookMarkOnly"><input type = "checkbox" id = "bookMarkS" /><label for = "bookMarkS">只看收藏</label></span>
+			<br /><small>【共收藏<span id = "bookMarkCount"></span>题，清理缓存后全部收藏将丢失！】</small>
+		</div>
+	</div>
+	<div style = "margin-top: 8px;">
+		跳转至：<input type = "number" id = "goTo" maxlength = "5" style = "width : 30%"></input>
+		<div class = "qq_button" onclick = "goToQstn()">前往</div>
+	</div>
+</div>
+
+<hr id = "resolve-hr" style = "margin-bottom : 0" />
+<div id = "resolve-div" style = "background : #1E90FF; color : white" onclick = "showHideShowFunc('resolve-p', 'showresolve', '查看题目解析')">
+	<small id = "showresolve">&#9658查看题目解析</small>
+</div>
+<p id = "resolve-p" style = "display : none; font-size: 90%;"></p>
+
+<hr style = "margin-bottom : 0" />
+<div style = "background : #1E90FF; color : white" onclick = "showHideShowFunc('qstnSet', 'settext', '浏览设置')">
+	<small id = "settext">&#9658浏览设置</small>
+</div>
+
+<div id = "qstnSet" style = "display : none;">
+	<div style = "margin-top: 8px;">
+		<input type = "checkbox" id = "schoiseCheck" checked = "true"></input><label for = "schoiseCheck">单选题</label>
+		<input type = "checkbox" id = "mchoiseCheck" checked = "true"></input><label for = "mchoiseCheck">多选题</label>
+		<input type = "checkbox" id = "judgeCheck" checked = "true"></input><label for = "judgeCheck">判断题</label>
+	</div>
+	<div style = "margin-top: 8px;">
+		<input type = "checkbox" id = "blankCheck" checked = "true"></input><label for = "blankCheck">填空题</label>
+		<input type = "checkbox" id = "textCheck" checked = "true"></input><label for = "textCheck">简答题</label>
+	</div>
+	<hr/>
+	<div style = "margin-top: 8px;">
+		<input type = "checkbox" id = "random"></input><label for = "random">乱序</label>
+		随机Key：<input type = "text" id = "randseed" maxlength = "10" style = "width : 40%" onclick = "this.select();"></input>
+		<br /><small>【随机Key为长度不大于10的任意字串，输入相同Key可以得到相同序列的题目，若不指定Key则随机排序】</small><br />
+		随机范围自<input type = "number" id = "randstart" maxlength = "4" style = "width : 20%" onclick = "this.select();"></input>
+		到<input type = "number" id = "randend" maxlength = "4" style = "width : 20%" onclick = "this.select();"></input>
+	</div>
+	<hr/>
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" onclick = "refreshList()">更新题目</div>
+	</div>
+</div>
+
+<hr style = "margin-bottom : 0" />
+<div style = "background : #1E90FF; color : white" onclick = "showHideShowFunc('qstnFind', 'findtext', '题目查找')">
+	<small id = "findtext">&#9658题目查找</small>
+</div>
+
+<div id = "qstnFind" style = "display : none;">
+	<div style = "margin-top: 8px;">
+		关键字查找（10字符以内）：<input type = "text" id = "search" maxlength = "10" style = "width : 75%" onclick = "this.select();"></input>
+	</div>
+	<div style = "margin-top: 8px;">
+		<div class = "qq_button" onclick = "searchQstn()">查找</div>
+	</div>
+</div>
+
+<hr />
+<small>GX Software 2018-2021 by 南郊居士</small>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "viewport" content = "width = device-width, height = device-height">
+	
+<link rel='apple-touch-icon' href='img/icon-h.png' type='image/png' />
+<link rel='shortcut icon' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+<link rel='icon' href='img/icon-h.png' type='image/png' />
+<link rel='bookmark' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+
+<title>QuickQuiz-M</title>
+
+<link rel = "stylesheet" type = "text/css" href="css/style.css" />
+
+<script type = "text/javascript" src = "js/global.js"></script>
+<script type = "text/javascript" src = "js/nightmode.js"></script>
+<script type = "text/javascript" src = "js/md5.js"></script>
+<script type = "text/javascript" src = "js/spy.js"></script>
+
+</head>
+
+<body onload = "initSpyList()">
+	
+<div style = "margin-top: 12px;">
+	<div class = "qq_button" id = "night" style = "width: 95px; line-height: 35px;" id = "night" onclick = "nightMode(true)">夜间模式</div>
+	<small>【返回主菜单请回退】</small>
+</div>
+	
+<div style = "margin-top: 8px;">
+	<input type = "search" id = "find" maxlength = "16" style = "width : 50%; font-size: 1em; height : 1.5em;" onsearch = "findString()" onfocus = "this.select()"></input>
+	<div class = "qq_button" style = "font-size: 0.8em; width: 70px; line-height: 25px;" onclick = "clearFind()">清空</div>
+	<div class = "qq_button" style = "font-size: 0.8em; width: 70px; line-height: 25px;" onclick = "findString()">查找</div>
+</div>
+
+<hr id = "hr0" style = "margin-bottom : 0" />
+<div id = "h0" class = "notetitle" onclick = "openClose(0)"></div><div id = "div0" class = "answer" style = "display : none;"></div>
+<hr id = "hr1" style = "margin-bottom : 0" />
+<div id = "h1" class = "notetitle" onclick = "openClose(1)"></div><div id = "div1" class = "answer" style = "display : none;"></div>
+<hr id = "hr2" style = "margin-bottom : 0" />
+<div id = "h2" class = "notetitle" onclick = "openClose(2)"></div><div id = "div2" class = "answer" style = "display : none;"></div>
+<hr id = "hr3" style = "margin-bottom : 0" />
+<div id = "h3" class = "notetitle" onclick = "openClose(3)"></div><div id = "div3" class = "answer" style = "display : none;"></div>
+<hr id = "hr4" style = "margin-bottom : 0" />
+<div id = "h4" class = "notetitle" onclick = "openClose(4)"></div><div id = "div4" class = "answer" style = "display : none;"></div>
+<hr id = "hr5" style = "margin-bottom : 0" />
+<div id = "h5" class = "notetitle" onclick = "openClose(5)"></div><div id = "div5" class = "answer" style = "display : none;"></div>
+<hr id = "hr6" style = "margin-bottom : 0" />
+<div id = "h6" class = "notetitle" onclick = "openClose(6)"></div><div id = "div6" class = "answer" style = "display : none;"></div>
+<hr id = "hr7" style = "margin-bottom : 0" />
+<div id = "h7" class = "notetitle" onclick = "openClose(7)"></div><div id = "div7" class = "answer" style = "display : none;"></div>
+<hr id = "hr8" style = "margin-bottom : 0" />
+<div id = "h8" class = "notetitle" onclick = "openClose(8)"></div><div id = "div8" class = "answer" style = "display : none;"></div>
+<hr id = "hr9" style = "margin-bottom : 0" />
+<div id = "h9" class = "notetitle" onclick = "openClose(9)"></div><div id = "div9" class = "answer" style = "display : none;"></div>
+<hr id = "hr10" style = "margin-bottom : 0" />
+
+<div style = "margin-top: 8px;">
+	<div class = "qq_button" style = "font-size: 0.8em; width: 70px; line-height: 25px;" id = "pre" onclick = "prePage()" style = "display : none;">上一页</div>
+	<div class = "qq_button" style = "font-size: 0.8em; width: 70px; line-height: 25px;" id = "next" onclick = "nextPage()">下一页</div><small id = "index" style = "margin-left : 5px;"></small>
+</div>
+
+<div style = "margin-top: 8px;" id = "jumpto">
+	<input type = "number" id = "jumpIndex" maxlength = "5" style = "width : 30%; font-size: 100%; height : 1em;"></input>
+	<div class = "qq_button" style = "font-size: 0.8em; width: 70px; line-height: 25px;" id = "jump" onclick = "jumpPage()">跳转！</div>
+</div>
+
+<hr />
+<small>GX Software 2018-2021 by 南郊居士</small>
+
+</body>
+</html>

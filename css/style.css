@@ -1,0 +1,56 @@
+﻿
+body {
+	font-size : 105%;
+	font-family : Microsoft YaHei, SimHei, sans-serif;
+}
+
+.qq_button {
+	border-spacing:0px;
+	border-style: solid;
+	border-color: #38f;
+	border-width: 1px;
+	
+	width: 6em;
+	line-height: 2.5em;
+	font-size: 95%;
+	
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #f8f8f8;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.answer {
+	font-size : 0.8em;
+	margin-top : 10px;
+	font-weight : bold;
+}
+
+.notetitle {
+	font-size : 0.8em;
+	background : #eee;
+	margin-top : 0;
+}
+
+input[type = "text"], input[type = "number"], input[type = "password"]
+{
+	font-size : 100%;
+	font-family : Microsoft YaHei, SimHei, sans-serif;
+	height : 2em;
+	
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+
+select {
+	width : 75%;
+	font-size : 100%;
+	font-family : Microsoft YaHei, SimHei, sans-serif;
+}

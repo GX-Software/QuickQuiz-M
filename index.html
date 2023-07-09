@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "viewport" content = "width = device-width, height = device-height">
+
+<link rel='apple-touch-icon' href='img/icon-h.png' type='image/png' />
+<link rel='shortcut icon' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+<link rel='icon' href='img/icon-h.png' type='image/png' />
+<link rel='bookmark' href='img/icon-h.ico' type='image/vnd.microsoft.icon' />
+
+<title>QuickQuiz-M V1.02</title>
+
+<script type="text/javascript">
+function load()
+{
+	if (parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE","")) <= 8) {
+		document.write("不支持IE8及更旧浏览器！");
+	}
+}
+</script>
+
+</head>
+
+<frameset rows = "0%, 100%" frameborder = 0 onload = "load()">
+	<frame src = "global.html" name = "global" title = "global" noresize = "noresize" frameborder = 0 />
+	<frame src = "main.html" name = "data" title = "global" noresize = "noresize" frameborder = 0 />
+</frameset>
+
+</html>
