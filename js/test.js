@@ -144,7 +144,7 @@ function makeQuiz()
 	document.getElementById("switch").innerHTML = "结束答题";
 	showQuestion();
 	enableAllChoise(true);
-	showTimeLeft(true);
+	showTimeLeft();
 	
 	document.getElementById("resolve-hr").style.display = "none";
 	document.getElementById("resolve-div").style.display = "none";
@@ -237,7 +237,7 @@ function prefixInteger(num, n)
     return (Array(n).join(0) + num).slice(-n);
 }
 
-function showTimeLeft(first)
+function showTimeLeft()
 {
 	if (testTimeSave > 0 && testTime > testTimeSave) {
 		testTime = testTimeSave;
@@ -245,11 +245,6 @@ function showTimeLeft(first)
 	}
 	
 	if (!startTest) {
-		var h = parseInt(testTime / 3600);
-		var m = parseInt((testTime % 3600) / 60);
-		var s = parseInt(testTime % 60);
-		
-		document.getElementById("timeLeft").innerHTML = "考试结束，用时" + h + ":" + m + ":" + s;
 		return;
 	}
 	else if (testTimeSave > 0) {
@@ -683,6 +678,9 @@ function switchFunc(ask)
 		}
 		alert(t);
 		
+		document.getElementById("timeLeft").innerHTML = "用时：" + h + ":" + m + ":" + s +
+			"，得分：" + currect + "/" + qstnList.length + "(" + percent.toFixed(2) + "%)";
+		
 		document.getElementById("switch").innerHTML = "重新开始";
 		document.getElementById("doingfunc").style.display = "none";
 		
@@ -849,7 +847,7 @@ function pause()
 function goOnTest()
 {
 	startTest = true;
-	showTimeLeft(true);
+	showTimeLeft();
 	
 	document.getElementById("test").style.display = "";
 	document.getElementById("pausescreen").style.display = "none";
